@@ -189,7 +189,7 @@ export default function VoiceAssistantPage() {
       }
 
       setChatMessages((prev) => [...prev, { sender: 'AI', text: botResponse }]);
-    }, 700);
+    }, 200);
   };
 
   return (

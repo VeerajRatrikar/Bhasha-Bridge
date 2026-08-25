@@ -76,7 +76,7 @@ export function DynamicQrTerminal({
     setPaymentStatus('scanning');
     setTimeout(() => {
       setPaymentStatus('locked');
-    }, 1800);
+    }, 500);
   };
 
   const handleReleaseEscrow = () => {
