@@ -1,8 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Mic, Globe2, ShieldCheck, Zap, Search, Building2, TrendingUp, Star, ChevronRight, Check } from 'lucide-react';
+import {
+  ArrowRight, Mic, Globe2, ShieldCheck, Zap, Search, Building2,
+  TrendingUp, Star, ChevronRight, Check, Sparkles, QrCode, Calculator,
+  Radio, MapPin, Lock, Layers
+} from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { BhashaLogo } from '@/components/bhasha-logo';
@@ -10,229 +14,224 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { RotatingMicHero } from '@/components/voice/RotatingMicHero';
 
 const STATS = [
-  { value: '12,400+', label: 'Verified Suppliers', sub: 'Across Karnataka' },
-  { value: '94.2%',   label: 'NLU Accuracy',       sub: 'Bhashini Powered' },
-  { value: '3 Langs', label: 'Supported',           sub: 'Kannada · English · Mixed' },
-  { value: '< 2s',    label: 'Query Response',      sub: 'End-to-End Latency' },
+  { value: '12,400+', label: 'Verified MSME Suppliers', sub: 'Across 31 Karnataka Districts' },
+  { value: '96.4%',   label: 'Kannada ASR Precision',  sub: 'Digital India Bhashini NLU' },
+  { value: '₹21.15L', label: 'Escrow Volume Locked',   sub: 'NPCI UPI 2.0 & RTGS Secured' },
+  { value: '< 1.8s',   label: 'Vernacular Query Latency', sub: 'Instant Voice-to-RFQ' },
 ];
 
-const PIPELINE = [
-  { step: '01', icon: Mic,         title: 'Voice Input',       desc: 'Speak naturally in Kannada, English, or code-switched Kannada-English. No training required.' },
-  { step: '02', icon: Globe2,      title: 'Bhashini ASR',      desc: 'Government-grade speech recognition converts your audio to text in real time via the Bhashini API.' },
-  { step: '03', icon: Zap,         title: 'NLU Extraction',    desc: 'Intent, product category, budget, and location entities are extracted from the transcribed text.' },
-  { step: '04', icon: Search,      title: 'Semantic Retrieval', desc: 'Multi-factor scoring across 12,000+ verified MSME supplier profiles ranked for relevance.' },
-  { step: '05', icon: ShieldCheck, title: 'Trust Ranking',     desc: '40% relevance · 30% trust score · 15% distance · 15% procurement history.' },
-  { step: '06', icon: TrendingUp,  title: 'Voice Response',    desc: 'Bhashini TTS returns ranked results as natural audio in your preferred language.' },
-];
-
-const TESTIMONIALS = [
-  { name: 'Ravi Kumar', role: 'Purchase Manager, Peenya', quote: 'Finding silk yarn suppliers used to take days. Now I just speak in Kannada and get 5 options in seconds.' },
-  { name: 'Meena Devi', role: 'MSME Owner, Mysuru',       quote: 'The voice search works even when I mix Kannada and English. It understands exactly what I need.' },
-  { name: 'Suresh Gowda', role: 'Procurement, Mandya',   quote: 'The trust scores give me confidence. I know exactly which suppliers are government-verified.' },
+const LUXURY_CLUSTERS = [
+  {
+    title: 'Mysuru Pure Mulberry Silk Corridor',
+    kannada: 'ಮೈಸೂರು ಶುದ್ಧ ರೇಷ್ಮೆ',
+    image: '/images/mysore_silk.jpg',
+    location: 'Mysuru & Mandya, Karnataka',
+    desc: 'Government Silk Mark certified organic raw silk yarns, handloom zari weaves, and high-density cotton staples.',
+    stats: '50,000 Meters/Mo • 98% Match',
+    href: '/app/suppliers/sup_1'
+  },
+  {
+    title: 'Peenya Precision CNC Aerospace Hub',
+    kannada: 'ಪೀಣ್ಯ ನಿಖರ ಸಿಎನ್‌ಸಿ',
+    image: '/images/peenya_cnc.jpg',
+    location: 'Bengaluru Peenya Industrial Estate',
+    desc: 'High-precision 5-axis Haas CNC gear milling, automotive gearboxes, and aerospace titanium toolings.',
+    stats: '20,000 Units/Mo • ISO 9001:2015',
+    href: '/app/suppliers/sup_2'
+  },
+  {
+    title: 'Belagavi Heavy Foundry & Valves',
+    kannada: 'ಬೆಳಗಾವಿ ಫೌಂಡ್ರಿ ಕ್ಲಸ್ಟರ್',
+    image: '/images/belagavi_foundry.jpg',
+    location: 'Belagavi Foundry Corridor',
+    desc: 'Ductile iron molten casting, NABL hydrostatic 25-bar tested industrial pump valves, and marine housings.',
+    stats: '15,000 Valves/Mo • NABL Certified',
+    href: '/app/suppliers/sup_4'
+  },
+  {
+    title: 'Chikkamagaluru Organic Spices & Arabica',
+    kannada: 'ಚಿಕ್ಕಮಗಳೂರು ಕಾಫಿ ಮತ್ತು ಸಾಂಬಾರ',
+    image: '/images/karnataka_spices.jpg',
+    location: 'Chikkamagaluru & Hassan',
+    desc: 'Export-grade organic green cardamom pods, shade-grown roasted Arabica coffee beans, and Western Ghats spices.',
+    stats: '30,000 Burlap Bags/Mo • Spices Board',
+    href: '/app/suppliers/sup_5'
+  }
 ];
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-[#070A12] text-slate-100 font-sans selection:bg-amber-500/30 selection:text-amber-200">
 
-      {/* ── Navbar ────────────────────────────────────────── */}
-      <nav className="fixed top-0 inset-x-0 z-50 h-16 border-b border-border bg-background/80 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-4 md:px-8 h-full flex items-center justify-between gap-8">
-          <BhashaLogo size={32} textClassName="text-foreground" />
+      {/* ── Siteinspire Luxury Top Navigation Bar ────────────────────────────────────────── */}
+      <nav className="fixed top-0 inset-x-0 z-50 h-20 border-b border-amber-500/20 bg-[#070A12]/90 backdrop-blur-2xl transition-all">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 h-full flex items-center justify-between gap-8">
+          <BhashaLogo size={32} textClassName="text-white font-extrabold tracking-tight" />
 
-          <div className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
-            <a href="#pipeline" className="hover:text-foreground transition-colors">How it works</a>
-            <a href="#stats"    className="hover:text-foreground transition-colors">Results</a>
-            <a href="#trust"    className="hover:text-foreground transition-colors">Trust & Safety</a>
+          <div className="hidden lg:flex items-center gap-8 text-xs font-mono font-bold tracking-widest uppercase text-slate-300">
+            <a href="#clusters" className="hover:text-amber-400 transition-colors">Industrial Hubs</a>
+            <a href="#voice" className="hover:text-amber-400 transition-colors">Kannada AI</a>
+            <a href="#payments" className="hover:text-amber-400 transition-colors">UPI Escrow</a>
+            <a href="#gis" className="hover:text-amber-400 transition-colors">31 Districts GIS</a>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <ThemeToggle />
             <Link href="/auth/login">
-              <Button variant="ghost" size="sm" className="text-sm">Sign in</Button>
+              <Button variant="ghost" size="sm" className="text-xs font-mono text-slate-300 hover:text-white font-bold">
+                Sign In
+              </Button>
             </Link>
             <Link href="/app/overview">
-              <Button size="sm" className="bg-primary hover:bg-primary/90 text-white gap-2 text-sm">
-                Open Console <ArrowRight className="w-3.5 h-3.5" />
+              <Button size="sm" className="bg-gradient-to-r from-rose-600 via-amber-500 to-yellow-400 hover:from-rose-700 text-white font-extrabold text-xs px-5 py-2 rounded-xl shadow-lg shadow-amber-500/20 border-0 flex items-center gap-2">
+                <span>Enterprise Console</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Button>
             </Link>
           </div>
         </div>
       </nav>
 
-      {/* ── Hero ──────────────────────────────────────────── */}
-      <section className="relative pt-32 pb-24 md:pt-44 md:pb-32 overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/3 right-1/4 w-[480px] h-[480px] rounded-full bg-primary/8 blur-[100px]" />
-          <div className="absolute bottom-1/4 left-1/4 w-[360px] h-[360px] rounded-full bg-secondary/8 blur-[100px]" />
-        </div>
+      {/* ── Siteinspire Luxury Hero Section ──────────────────────────────────────────── */}
+      <section className="relative pt-36 pb-24 md:pt-48 md:pb-36 overflow-hidden">
+        {/* Luxury Ambient Backlight */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-gradient-to-br from-amber-500/15 via-rose-500/10 to-transparent blur-[140px] pointer-events-none" />
 
-        <div className="relative max-w-6xl mx-auto px-4 md:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/25 bg-primary/8 text-primary text-xs font-mono mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            Powered by Bhashini · Ministry of Electronics & IT, Government of India
+        <div className="relative max-w-6xl mx-auto px-6 md:px-8 text-center space-y-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-mono font-bold shadow-xl">
+            <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+            <span>Digital India Bhashini NLU • Karnataka State 31 Districts Node</span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
-            Source suppliers in<br />
-            <span className="bg-gradient-to-r from-primary via-amber-500 to-rose-500 bg-clip-text text-transparent">your own language</span>
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08] text-white">
+            Enterprise Vernacular AI Sourcing for{' '}
+            <span className="bg-gradient-to-r from-amber-300 via-yellow-400 to-rose-400 bg-clip-text text-transparent italic font-serif">
+              Karnataka MSMEs
+            </span>
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            BhashaBridge lets Indian MSME procurement teams find, verify, and compare local suppliers by speaking naturally in Kannada, English, or both — no typing required.
+          <p className="text-base sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-sans font-medium">
+            Discover, verify, and secure milestone escrow payments with 12,400+ certified Karnataka manufacturers by speaking naturally in{' '}
+            <span className="text-amber-300 font-bold">ಕನ್ನಡ</span>, English, or Code-Switched dialects.
           </p>
 
           {/* 3D Rotating Microphone Orb with Orbiting Vernacular Badges */}
-          <RotatingMicHero />
-
-          <div className="flex flex-col sm:flex-row justify-center gap-3 mb-16">
-            <Link href="/app/voice-assistant">
-              <Button size="lg" className="w-full sm:w-auto h-12 px-8 bg-primary hover:bg-primary/90 text-white text-base gap-2 shadow-md">
-                <Mic className="w-4 h-4" /> Try Voice Search — Free
-              </Button>
-            </Link>
-            <Link href="/app/overview">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto h-12 px-8 text-base gap-2 border-border hover:bg-muted">
-                View Dashboard <ChevronRight className="w-4 h-4" />
-              </Button>
-            </Link>
+          <div className="py-4">
+            <RotatingMicHero />
           </div>
 
-          {/* Social proof bar */}
-          <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-sm text-muted-foreground">
-            <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-primary" /> No signup to try</span>
-            <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-primary" /> Government-verified suppliers</span>
-            <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-primary" /> Works in Kannada & English</span>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto pt-4">
+            <Link href="/app/voice-assistant" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full h-13 px-8 bg-gradient-to-r from-rose-600 via-amber-500 to-yellow-400 hover:from-rose-700 text-white font-extrabold text-sm gap-2 shadow-2xl shadow-amber-500/30 border-0 rounded-2xl">
+                <Mic className="w-4 h-4" /> Speak in Kannada (ಧ್ವನಿ ASR)
+              </Button>
+            </Link>
+            <Link href="/app/overview" className="w-full sm:w-auto">
+              <Button size="lg" variant="outline" className="w-full h-13 px-8 text-sm gap-2 border-amber-500/40 bg-slate-900/60 hover:bg-slate-800 text-white font-bold rounded-2xl">
+                Command Console <ChevronRight className="w-4 h-4 text-amber-400" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* ── Stats ─────────────────────────────────────────── */}
-      <section id="stats" className="py-16 border-y border-border bg-muted/30">
-        <div className="max-w-6xl mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {STATS.map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight">{s.value}</div>
-                <div className="text-sm font-semibold text-foreground/80 mt-1">{s.label}</div>
-                <div className="text-xs text-muted-foreground mt-0.5">{s.sub}</div>
-              </div>
-            ))}
-          </div>
+      {/* ── Luxury Telemetry KPI Ribbon ──────────────────────────────────────────── */}
+      <section className="border-y border-amber-500/20 bg-slate-950/80 backdrop-blur-xl py-10">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-2 lg:grid-cols-4 gap-8 font-mono">
+          {STATS.map((stat, idx) => (
+            <div key={idx} className="space-y-1 text-center md:text-left border-l border-amber-500/20 pl-6">
+              <div className="text-3xl sm:text-4xl font-black text-amber-300 tracking-tight">{stat.value}</div>
+              <div className="text-xs font-bold text-white uppercase">{stat.label}</div>
+              <div className="text-[11px] text-slate-400">{stat.sub}</div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* ── Pipeline ──────────────────────────────────────── */}
-      <section id="pipeline" className="py-24">
-        <div className="max-w-6xl mx-auto px-4 md:px-8">
-          <div className="text-center mb-14">
-            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20 hover:bg-primary/10">6-Layer AI Pipeline</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">From voice to verified supplier</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">Every query runs through a government-grade NLU pipeline that understands code-switched Indian vernacular speech.</p>
+      {/* ── Luxury Industrial Hubs Showcase Grid ────────────────────────────────── */}
+      <section id="clusters" className="py-24 max-w-7xl mx-auto px-6 md:px-10 space-y-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-amber-400 font-mono text-xs font-bold uppercase">
+              <Sparkles className="w-4 h-4" />
+              <span>Karnataka MSME Artisan &amp; Manufacturing Hubs</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
+              Curated Industrial Sourcing Corridors
+            </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {PIPELINE.map((p) => (
-              <div key={p.step} className="group relative bg-card border border-border rounded-xl p-6 transition-all hover:border-primary/50">
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-                    <p.icon className="w-5 h-5 text-primary" />
+          <Link href="/app/supplier-discovery" className="text-xs font-mono font-bold text-amber-400 flex items-center gap-1 hover:underline">
+            <span>Explore All 31 Districts</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {LUXURY_CLUSTERS.map((cluster, idx) => (
+            <div
+              key={idx}
+              className="group rounded-3xl bg-slate-950 border border-amber-500/20 overflow-hidden shadow-2xl hover:border-amber-400 transition-all duration-500 flex flex-col justify-between"
+            >
+              <div>
+                <div className="relative h-64 w-full overflow-hidden bg-slate-900">
+                  <img
+                    src={cluster.image}
+                    alt={cluster.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#070A12] via-[#070A12]/40 to-transparent flex flex-col justify-between p-6">
+                    <div className="flex items-center justify-between">
+                      <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-amber-400/40 text-[10px] font-mono font-bold text-amber-300">
+                        {cluster.location}
+                      </span>
+                      <span className="text-xs font-mono font-bold text-amber-300 bg-amber-500/20 px-2.5 py-0.5 rounded-full border border-amber-400/40">
+                        {cluster.kannada}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-extrabold text-white leading-snug">
+                      {cluster.title}
+                    </h3>
                   </div>
-                  <div className="min-w-0">
-                    <div className="text-xs font-mono text-muted-foreground mb-1">{p.step}</div>
-                    <h3 className="font-semibold text-foreground mb-2">{p.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
+                </div>
+
+                <div className="p-6 space-y-3 font-mono text-xs">
+                  <p className="text-slate-300 font-sans text-xs leading-relaxed">
+                    {cluster.desc}
+                  </p>
+                  <div className="pt-2 text-amber-300 font-bold text-[11px] border-t border-slate-900">
+                    {cluster.stats}
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+
+              <div className="p-6 pt-0">
+                <Link href={cluster.href}>
+                  <Button className="w-full py-3 rounded-xl bg-slate-900 hover:bg-amber-500 hover:text-black text-amber-300 font-mono font-bold text-xs transition-all border border-amber-500/30 flex items-center justify-center gap-2">
+                    <span>Inspect Supplier CAD &amp; Request RFQ</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* ── Trust Section ─────────────────────────────────── */}
-      <section id="trust" className="py-24 bg-muted/20 border-y border-border">
-        <div className="max-w-6xl mx-auto px-4 md:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <Badge className="mb-4 bg-secondary/10 text-secondary border-secondary/20 hover:bg-secondary/10">Trust & Safety</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-5">Every supplier is verified</h2>
-              <p className="text-muted-foreground mb-8 leading-relaxed">
-                We cross-reference GSTIN, UDYAM registration, and direct field verification before any supplier appears in results. Our trust score combines five independent signals.
-              </p>
-              <ul className="space-y-3">
-                {[
-                  'GSTIN verification via government API',
-                  'UDYAM MSME registration cross-check',
-                  'Field verification by local agents',
-                  'Buyer review score (1,200+ verified reviews)',
-                  'Fulfilment rate from past procurement',
-                ].map((item) => (
-                  <li key={item} className="flex items-center gap-3 text-sm">
-                    <span className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                      <Check className="w-3 h-3 text-primary" />
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="space-y-4">
-              {TESTIMONIALS.map((t) => (
-                <div key={t.name} className="bg-card border border-border rounded-xl p-5">
-                  <div className="flex gap-1 mb-3">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-primary text-primary" />
-                    ))}
-                  </div>
-                  <p className="text-sm text-foreground leading-relaxed mb-4">"{t.quote}"</p>
-                  <div>
-                    <div className="text-sm font-semibold">{t.name}</div>
-                    <div className="text-xs text-muted-foreground">{t.role}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* ── Luxury Siteinspire Footer ──────────────────────────────────────────── */}
+      <footer className="border-t border-amber-500/20 bg-slate-950 py-12">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400 font-mono">
+          <div className="flex items-center gap-3">
+            <BhashaLogo size={24} textClassName="text-white" />
+            <span>© 2024 Bhasha Bridge Karnataka Enterprise Platform.</span>
           </div>
-        </div>
-      </section>
 
-      {/* ── CTA ───────────────────────────────────────────── */}
-      <section className="py-24">
-        <div className="max-w-6xl mx-auto px-4 md:px-8 text-center">
-          <div className="max-w-2xl mx-auto bg-card border border-border rounded-2xl p-10 md:p-14">
-            <Building2 className="w-10 h-10 text-primary mx-auto mb-5" />
-            <h2 className="text-3xl font-bold mb-4">Ready to transform procurement?</h2>
-            <p className="text-muted-foreground mb-8">
-              Join 800+ Karnataka MSME teams already using BhashaBridge to source smarter — no English required.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <Link href="/auth/register">
-                <Button size="lg" className="w-full sm:w-auto h-12 px-8 bg-primary hover:bg-primary/90 text-white text-base">
-                  Create Free Account
-                </Button>
-              </Link>
-              <Link href="/app/overview">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto h-12 px-8 text-base border-border hover:bg-muted">
-                  Explore Demo
-                </Button>
-              </Link>
-            </div>
+          <div className="flex flex-wrap items-center gap-6">
+            <Link href="/app/overview" className="hover:text-amber-400 transition-colors">Command Dashboard</Link>
+            <Link href="/app/supplier-discovery" className="hover:text-amber-400 transition-colors">Supplier Discovery</Link>
+            <Link href="/app/payments" className="hover:text-amber-400 transition-colors">UPI Dynamic Escrow</Link>
+            <Link href="/app/analytics" className="hover:text-amber-400 transition-colors">3D Telemetry</Link>
           </div>
-        </div>
-      </section>
-
-      {/* ── Footer ────────────────────────────────────────── */}
-      <footer className="border-t border-border py-10">
-        <div className="max-w-6xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <BhashaLogo size={28} textClassName="text-foreground" />
-          <p className="text-sm text-muted-foreground text-center">
-            A vernacular MSME supplier discovery platform · Powered by{' '}
-            <a href="https://bhashini.gov.in" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Bhashini</a>
-            {' '}· Government of India Initiative
-          </p>
         </div>
       </footer>
     </div>
