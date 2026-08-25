@@ -47,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased dark" suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" className="h-full antialiased dark" suppressHydrationWarning>
       <body className="min-h-full flex flex-col bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300" suppressHydrationWarning>
         <ThemeProvider>
           {children}
