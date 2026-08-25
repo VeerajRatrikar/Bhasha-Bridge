@@ -13,6 +13,8 @@ import {
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { KarnatakaGisMap } from '@/components/maps/KarnatakaGisMap';
+import { SupplyChainGlobe } from '@/components/3d/SupplyChainGlobe';
+import { VoiceOrb3D } from '@/components/3d/VoiceOrb3D';
 
 export default function OverviewPage() {
   const router = useRouter();
@@ -197,6 +199,11 @@ export default function OverviewPage() {
           whileHover={{ y: -2 }}
           className="lg:col-span-2 relative rounded-3xl bg-white dark:bg-gradient-to-b dark:from-[#111624] dark:via-[#0E1322] dark:to-[#0A0D16] border border-slate-200 dark:border-[#1E283D] p-8 flex flex-col items-center justify-center min-h-[320px] overflow-hidden group shadow-xl transition-all"
         >
+          {/* 3D WebGL Voice Audio Energy Orb */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-40 pointer-events-none">
+            <VoiceOrb3D isListening={isListening} />
+          </div>
+
           {/* Radiant Background Rings */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="w-72 h-72 rounded-full bg-rose-500/5 dark:bg-rose-600/10 animate-ping opacity-25" />

@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { SupplyChainGlobe } from '@/components/3d/SupplyChainGlobe';
 
 export default function MSMEAnalyticsPage() {
   const router = useRouter();
@@ -53,6 +54,31 @@ export default function MSMEAnalyticsPage() {
           <RefreshCw className={`w-3.5 h-3.5 mr-1.5 ${isRefreshing ? 'animate-spin' : ''}`} />
           <span>Refresh Telemetry</span>
         </Button>
+      </div>
+
+      {/* ── 3D WebGL Interactive Globe & Node Telemetry Hero ── */}
+      <div className="relative rounded-3xl bg-gradient-to-r from-slate-900 via-[#0B101D] to-[#0A0D16] border border-amber-500/30 p-6 md:p-8 shadow-2xl overflow-hidden text-white flex flex-col lg:flex-row items-center justify-between gap-6">
+        <div className="max-w-md space-y-3 z-10">
+          <Badge variant="gold" size="xs">Three.js 3D WebGL Mesh</Badge>
+          <h2 className="text-xl md:text-2xl font-black tracking-tight">
+            Karnataka 31-Districts 3D Industrial Node Network
+          </h2>
+          <p className="text-xs text-slate-300 font-mono leading-relaxed">
+            Real-time WebGL spatial telemetry visualizing active supply chain corridors, foundry flows, and milestone escrows across Peenya, Mysuru, Belagavi, Davangere, and Mangaluru.
+          </p>
+          <div className="flex items-center gap-3 pt-1 text-xs font-mono font-bold text-amber-300">
+            <span className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+              <span>350 Active Nodes</span>
+            </span>
+            <span>•</span>
+            <span className="text-emerald-400">0.4ms Latency</span>
+          </div>
+        </div>
+
+        <div className="w-full lg:w-80 h-72 relative z-10 shrink-0">
+          <SupplyChainGlobe />
+        </div>
       </div>
 
       {/* ── Top Metric Cards ────────────────── */}

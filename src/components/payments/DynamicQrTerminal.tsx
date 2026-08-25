@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { EscrowCube3D } from '@/components/3d/EscrowCube3D';
 
 interface DynamicQrProps {
   initialAmount?: number;
@@ -93,8 +94,11 @@ export function DynamicQrTerminal({
 
   return (
     <div className="relative rounded-3xl bg-white dark:bg-gradient-to-b dark:from-[#111624] dark:via-[#0D121F] dark:to-[#090C15] border border-slate-200 dark:border-[#1E283D] p-6 md:p-8 shadow-xl overflow-hidden">
-      {/* Top Ambient Glow */}
+      {/* Top Ambient Glow & 3D WebGL Escrow Cube */}
       <div className="absolute top-0 right-1/4 w-72 h-72 bg-gradient-to-br from-amber-500/15 via-rose-500/10 to-transparent blur-3xl pointer-events-none opacity-0 dark:opacity-100" />
+      <div className="absolute top-2 right-4 w-40 h-40 pointer-events-none opacity-30 hidden lg:block z-0">
+        <EscrowCube3D />
+      </div>
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100 dark:border-[#1E283D]">
