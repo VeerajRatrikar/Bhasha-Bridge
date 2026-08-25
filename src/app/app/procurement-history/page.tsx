@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { LogisticsRoute3D } from '@/components/3d/LogisticsRoute3D';
 
 export default function ProcurementHistoryPage() {
   const router = useRouter();
@@ -97,7 +98,7 @@ export default function ProcurementHistoryPage() {
             <Badge variant="green" size="xs">Live E-Way Track</Badge>
           </div>
           <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">
-            Real-time milestone tracking across Karnataka expressway corridors, GST e-way bills, and UPI escrow releases.
+            Track ongoing MSME shipments across 31 Karnataka Districts &amp; State Toll Gates.
           </p>
         </div>
 
@@ -109,6 +110,21 @@ export default function ProcurementHistoryPage() {
             <QrCode className="w-3.5 h-3.5 mr-1.5" />
             <span>Escrow Terminal</span>
           </Button>
+        </div>
+      </div>
+
+      {/* ── 3D WebGL Highway Logistics Track Banner ── */}
+      <div className="rounded-3xl bg-slate-950 border border-emerald-500/30 p-6 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 text-white font-mono text-xs">
+        <div className="space-y-2 max-w-md">
+          <Badge variant="green" size="xs">Three.js 3D Logistics Track</Badge>
+          <h2 className="text-lg font-black text-white">Live Expressway Telemetry &amp; Toll Gate Beacons</h2>
+          <p className="text-slate-400 text-xs font-sans leading-relaxed">
+            Real-time GPS sensors transmitting 3D truck orientation, speed, and automated e-NACH toll gate milestone approvals.
+          </p>
+        </div>
+
+        <div className="w-full md:w-72 h-44 shrink-0">
+          <LogisticsRoute3D />
         </div>
       </div>
 

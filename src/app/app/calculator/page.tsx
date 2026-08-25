@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { FreightRing3D } from '@/components/3d/FreightRing3D';
 
 export default function CostCalculatorPage() {
   const router = useRouter();
@@ -250,6 +251,14 @@ export default function CostCalculatorPage() {
                 </h3>
               </div>
               <Badge variant="green" size="xs">100% Subsidized Escrow</Badge>
+            </div>
+
+            {/* 3D WebGL Distance & Freight Matrix Ring */}
+            <div className="w-full h-36 rounded-2xl bg-slate-950 border border-amber-500/20 relative overflow-hidden flex items-center justify-center">
+              <FreightRing3D distance={140} weight={quantity} />
+              <div className="absolute bottom-2 right-3 text-[10px] font-mono text-amber-300 font-bold bg-black/60 px-2 py-0.5 rounded-full border border-amber-500/30">
+                3D Freight Geometry Matrix
+              </div>
             </div>
 
             {/* Breakdown Rows */}

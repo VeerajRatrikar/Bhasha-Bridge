@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { ProductViewer3D } from '@/components/3d/ProductViewer3D';
 
 export default function SupplierProfilePage() {
   const router = useRouter();
@@ -150,6 +151,9 @@ export default function SupplierProfilePage() {
           </div>
         </div>
       </div>
+
+      {/* ── Interactive 3D WebGL Inspection CAD Mesh ── */}
+      <ProductViewer3D productType="silk_spool" title="3D WebGL Material Inspection Mesh (Mysuru Pure Silk Spool)" />
 
       {/* ── Quick Landed Cost Calculator Widget ── */}
       <div className="rounded-3xl bg-white dark:bg-gradient-to-b dark:from-[#111624] dark:to-[#0A0D16] border border-slate-200 dark:border-[#1E283D] p-6 shadow-xl space-y-4">
