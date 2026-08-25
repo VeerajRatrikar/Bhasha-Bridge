@@ -22,50 +22,47 @@ export function EscrowCube3D() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Cube Group
-    const cubeGroup = new THREE.Group();
-    scene.add(cubeGroup);
+    const escrowGroup = new THREE.Group();
+    scene.add(escrowGroup);
 
-    // Outer Wireframe Box
-    const outerGeo = new THREE.BoxGeometry(1.5, 1.5, 1.5);
-    const outerMat = new THREE.MeshStandardMaterial({
+    // 1. Outer Glass Escrow Shield Ring
+    const shieldGeo = new THREE.IcosahedronGeometry(1.4, 2);
+    const shieldMat = new THREE.MeshPhysicalMaterial({
       color: 0xf59e0b,
-      wireframe: true,
-      roughness: 0.1,
       metalness: 0.9,
+      roughness: 0.1,
+      wireframe: true,
       transparent: true,
-      opacity: 0.8
+      opacity: 0.7
     });
-    const outerCube = new THREE.Mesh(outerGeo, outerMat);
-    cubeGroup.add(outerCube);
+    const shieldMesh = new THREE.Mesh(shieldGeo, shieldMat);
+    escrowGroup.add(shieldMesh);
 
-    // Inner Glowing Core Cube
-    const innerGeo = new THREE.BoxGeometry(1.0, 1.0, 1.0);
-    const innerMat = new THREE.MeshPhysicalMaterial({
-      color: 0xe11d48,
-      roughness: 0.2,
-      metalness: 0.8,
-      clearcoat: 1,
-      transparent: true,
-      opacity: 0.6
+    // 2. Central Metallic Gold Coin Disc (Rupee Emblem)
+    const coinGeo = new THREE.CylinderGeometry(0.85, 0.85, 0.15, 32);
+    const coinMat = new THREE.MeshStandardMaterial({
+      color: 0xf59e0b,
+      metalness: 0.95,
+      roughness: 0.15
     });
-    const innerCube = new THREE.Mesh(innerGeo, innerMat);
-    cubeGroup.add(innerCube);
+    const coinMesh = new THREE.Mesh(coinGeo, coinMat);
+    coinMesh.rotation.x = Math.PI / 2;
+    escrowGroup.add(coinMesh);
 
-    // Orbiting Security Nodes
-    const nodesGeo = new THREE.SphereGeometry(0.12, 16, 16);
-    const nodesMat = new THREE.MeshBasicMaterial({ color: 0x10b981 });
+    // 3. Orbiting Emerald Milestone Security Nodes
+    const nodeGeo = new THREE.SphereGeometry(0.12, 16, 16);
+    const nodeMat = new THREE.MeshBasicMaterial({ color: 0x10b981 });
 
-    const node1 = new THREE.Mesh(nodesGeo, nodesMat);
-    const node2 = new THREE.Mesh(nodesGeo, nodesMat);
-    const node3 = new THREE.Mesh(nodesGeo, nodesMat);
+    const node1 = new THREE.Mesh(nodeGeo, nodeMat);
+    const node2 = new THREE.Mesh(nodeGeo, nodeMat);
+    const node3 = new THREE.Mesh(nodeGeo, nodeMat);
 
-    cubeGroup.add(node1);
-    cubeGroup.add(node2);
-    cubeGroup.add(node3);
+    escrowGroup.add(node1);
+    escrowGroup.add(node2);
+    escrowGroup.add(node3);
 
     // Lighting
-    const pointLight = new THREE.PointLight(0xf59e0b, 3, 10);
+    const pointLight = new THREE.PointLight(0xf59e0b, 3.5, 10);
     pointLight.position.set(3, 3, 3);
     scene.add(pointLight);
 
@@ -80,15 +77,14 @@ export function EscrowCube3D() {
       animationFrameId = requestAnimationFrame(animate);
       const time = clock.getElapsedTime();
 
-      cubeGroup.rotation.y = time * 0.5;
-      cubeGroup.rotation.x = time * 0.3;
+      escrowGroup.rotation.y = time * 0.5;
+      escrowGroup.rotation.x = Math.sin(time * 0.3) * 0.2;
 
-      innerCube.rotation.y = -time * 0.8;
-      innerCube.rotation.z = time * 0.4;
+      coinMesh.rotation.z = time * 0.4;
 
-      node1.position.set(Math.cos(time * 2) * 1.3, Math.sin(time * 2) * 1.3, 0);
-      node2.position.set(0, Math.cos(time * 2.2) * 1.3, Math.sin(time * 2.2) * 1.3);
-      node3.position.set(Math.sin(time * 1.8) * 1.3, 0, Math.cos(time * 1.8) * 1.3);
+      node1.position.set(Math.cos(time * 2) * 1.5, Math.sin(time * 2) * 1.5, 0);
+      node2.position.set(0, Math.cos(time * 2.2) * 1.5, Math.sin(time * 2.2) * 1.5);
+      node3.position.set(Math.sin(time * 1.8) * 1.5, 0, Math.cos(time * 1.8) * 1.5);
 
       renderer.render(scene, camera);
     };

@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { ProductViewer3D } from '@/components/3d/ProductViewer3D';
 
 export default function SupplierDiscoveryPage() {
   const router = useRouter();
@@ -20,6 +21,7 @@ export default function SupplierDiscoveryPage() {
   const [msmeOnly, setMsmeOnly] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('All Sectors');
   const [selectedDistrict, setSelectedDistrict] = useState('ALL');
+  const [inspect3dType, setInspect3dType] = useState<'cnc_gear' | 'silk_spool' | 'hydraulic_valve' | 'cotton_bale' | null>(null);
 
   const KARNATAKA_DISTRICTS = [
     { name: 'ALL', count: 142 },
@@ -281,6 +283,52 @@ export default function SupplierDiscoveryPage() {
 
         {/* Right Content Area */}
         <div className="lg:col-span-3 space-y-8">
+          {/* 3D WebGL Material Inspection CAD Selector Banner */}
+          <div className="rounded-3xl bg-slate-950 border border-amber-500/30 p-5 shadow-2xl space-y-3 font-mono text-xs text-white">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+                <h3 className="font-black text-sm text-amber-300">Instant 3D Product CAD Mesh Inspector</h3>
+              </div>
+              <Badge variant="gold" size="xs">Three.js WebGL</Badge>
+            </div>
+
+            <p className="text-slate-400 text-xs font-sans leading-relaxed">
+              Select an MSME commodity asset below to inspect its 3D CAD mesh geometry directly in your browser before placing an RFQ:
+            </p>
+
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              {[
+                { type: 'cnc_gear', label: '⚙️ Peenya CNC Gear' },
+                { type: 'silk_spool', label: '🧶 Mysuru Silk Spool' },
+                { type: 'hydraulic_valve', label: '🔧 Belagavi Valve' },
+                { type: 'cotton_bale', label: '📦 Davangere Cotton' }
+              ].map((item) => (
+                <button
+                  key={item.type}
+                  onClick={() => setInspect3dType(inspect3dType === item.type as any ? null : item.type as any)}
+                  className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
+                    inspect3dType === item.type
+                      ? 'bg-amber-500 text-black border-amber-400 font-extrabold shadow-lg'
+                      : 'bg-slate-900 border-slate-800 text-slate-300 hover:border-amber-400 hover:text-white'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+
+            {inspect3dType && (
+              <div className="pt-2">
+                <ProductViewer3D
+                  productType={inspect3dType}
+                  title={`3D CAD Asset: ${inspect3dType.toUpperCase()}`}
+                  subtitle="Interactive Three.js CAD Mesh with Solid/Wireframe/X-Ray toggles"
+                />
+              </div>
+            )}
+          </div>
+
           {/* Recommended for You Spotlight Cards with Real Distinct Images */}
           <div>
             <div className="flex items-center gap-2 mb-4">
