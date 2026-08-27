@@ -133,7 +133,7 @@ export default function OverviewPage() {
       </div>
 
       {/* ── 4 Bento Telemetry KPI Cards ────────────────── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 font-mono">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono">
         <motion.div
           whileHover={{ y: -2 }}
           className="p-5 rounded-3xl bg-white dark:bg-gradient-to-b dark:from-[#111624] dark:to-[#0A0D16] border border-slate-200 dark:border-[#1E283D] shadow-lg space-y-2"
