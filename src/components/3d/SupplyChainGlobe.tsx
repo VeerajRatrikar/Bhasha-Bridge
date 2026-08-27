@@ -101,30 +101,42 @@ export function SupplyChainGlobe() {
     dirLight2.position.set(-5, -3, -5);
     scene.add(dirLight2);
 
-    // Interactive Mouse Motion
-    let mouseX = 0;
-    let mouseY = 0;
+    // Interactive Click & Drag 360° Rotation
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
 
-    const handleMouseMove = (event: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      mouseX = ((event.clientX - rect.left) / width - 0.5) * 2;
-      mouseY = ((event.clientY - rect.top) / height - 0.5) * 2;
+    const handleMouseDown = (e: MouseEvent) => {
+      isDragging = true;
+      previousMousePosition = { x: e.clientX, y: e.clientY };
     };
 
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      const deltaX = e.clientX - previousMousePosition.x;
+      const deltaY = e.clientY - previousMousePosition.y;
+
+      globeGroup.rotation.y += deltaX * 0.008;
+      globeGroup.rotation.x += deltaY * 0.008;
+
+      previousMousePosition = { x: e.clientX, y: e.clientY };
+    };
+
+    const handleMouseUp = () => {
+      isDragging = false;
+    };
+
+    container.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
 
     // Animation Loop
     let animationFrameId: number;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
 
-      // Rotations
-      globeGroup.rotation.y += 0.004;
-      globeGroup.rotation.x += 0.002;
-
-      // Gentle interactive tilt
-      globeGroup.rotation.y += mouseX * 0.01;
-      globeGroup.rotation.x += mouseY * 0.01;
+      if (!isDragging) {
+        globeGroup.rotation.y += 0.003;
+      }
 
       renderer.render(scene, camera);
     };
@@ -145,7 +157,9 @@ export function SupplyChainGlobe() {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      container.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('resize', handleResize);
       if (container && renderer.domElement) {
         container.removeChild(renderer.domElement);
