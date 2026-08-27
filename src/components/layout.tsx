@@ -31,6 +31,8 @@ const NAV_ITEMS = [
   { href: '/app/settings',            icon: Settings,        label: 'Platform Settings', badge: null },
 ];
 
+import { MobileAppSimulatorWrapper } from '@/components/mobile/MobileAppSimulatorWrapper';
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -51,7 +53,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-[#07090E] text-slate-900 dark:text-slate-100 font-sans selection:bg-amber-500/30 selection:text-amber-700 dark:selection:text-amber-200 transition-colors duration-300">
+    <MobileAppSimulatorWrapper>
+      <div className="flex min-h-screen bg-slate-50 dark:bg-[#07090E] text-slate-900 dark:text-slate-100 font-sans selection:bg-amber-500/30 selection:text-amber-700 dark:selection:text-amber-200 transition-colors duration-300">
       {/* ── Left Sidebar: Ultra-Premium Responsive Glass ─────────────────────────── */}
       <aside className="hidden md:flex flex-col w-64 shrink-0 border-r border-slate-200 dark:border-[#171E2E] bg-white/95 dark:bg-[#0A0D16]/95 backdrop-blur-2xl relative z-20 transition-colors duration-300">
         {/* Ambient Top Glow in dark mode */}
@@ -261,5 +264,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </nav>
       </div>
     </div>
+  </MobileAppSimulatorWrapper>
   );
 }
