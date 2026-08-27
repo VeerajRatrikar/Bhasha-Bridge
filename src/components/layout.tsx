@@ -137,10 +137,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* ── Main Content Area ─────────────────────────────── */}
       <div className="flex-1 flex flex-col min-w-0 max-h-screen relative overflow-hidden">
         {/* Top Header Bar */}
-        <header className="flex items-center justify-between px-6 h-16 border-b border-slate-200 dark:border-[#171E2E] bg-white/80 dark:bg-[#0A0D16]/80 backdrop-blur-xl shrink-0 z-20 transition-colors duration-300">
-          <div className="flex items-center gap-3">
-            <Link href="/" className="md:hidden flex items-center gap-2">
-              <BhashaLogo size={24} textClassName="text-slate-900 dark:text-slate-100" />
+        <header className="flex items-center justify-between px-3 sm:px-6 h-14 md:h-16 border-b border-slate-200 dark:border-[#171E2E] bg-white/80 dark:bg-[#0A0D16]/80 backdrop-blur-xl shrink-0 z-20 transition-colors duration-300 [.is-mobile-app-frame_&]:h-12 [.is-mobile-app-frame_&]:px-3">
+          <div className="flex items-center gap-2">
+            <Link href="/app/overview" className="flex items-center gap-2">
+              <BhashaLogo size={22} textClassName="text-slate-900 dark:text-slate-100" />
             </Link>
             <div className="hidden md:flex items-center gap-2 text-xs font-medium text-slate-600 dark:text-slate-400 font-mono">
               <span className="text-amber-700 dark:text-amber-400 font-bold">Bhasha Bridge</span>
@@ -151,7 +151,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {/* Spotlight Search Trigger */}
             <button
               onClick={() => setIsCommandPaletteOpen(true)}
@@ -168,29 +168,27 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Button
               onClick={() => router.push('/app/payments')}
               size="sm"
-              className="h-8 px-3 rounded-lg bg-amber-500/15 dark:bg-gradient-to-r dark:from-amber-500/20 dark:to-rose-500/20 border border-amber-400/40 text-amber-800 dark:text-amber-300 hover:bg-amber-500/25 text-xs font-bold font-mono flex items-center gap-1.5 cursor-pointer shadow-sm"
+              className="h-7 sm:h-8 px-2 sm:px-3 rounded-lg bg-amber-500/15 dark:bg-gradient-to-r dark:from-amber-500/20 dark:to-rose-500/20 border border-amber-400/40 text-amber-800 dark:text-amber-300 hover:bg-amber-500/25 text-[11px] sm:text-xs font-bold font-mono flex items-center gap-1 cursor-pointer shadow-sm"
             >
               <QrCode className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-              <span className="hidden sm:inline">UPI Dynamic Pay</span>
+              <span>UPI Pay</span>
             </Button>
-
-            <ThemeToggle />
 
             <button
               onClick={() => router.push('/app/settings')}
               title="Language: Kannada / English"
-              className="h-8 px-2.5 rounded-lg bg-slate-100 dark:bg-[#121724] hover:bg-slate-200 dark:hover:bg-[#1A2234] border border-slate-200 dark:border-[#171E2E] flex items-center gap-1.5 text-xs text-amber-800 dark:text-amber-300 transition-colors cursor-pointer font-bold"
+              className="h-7 sm:h-8 px-2 rounded-lg bg-slate-100 dark:bg-[#121724] border border-slate-200 dark:border-[#171E2E] flex items-center gap-1 text-[11px] text-amber-800 dark:text-amber-300 cursor-pointer font-bold"
             >
-              <Globe className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-              <span className="hidden sm:inline">ಕನ್ನಡ / EN</span>
+              <Globe className="w-3 h-3 text-amber-600 dark:text-amber-400" />
+              <span>ಕನ್ನಡ</span>
             </button>
 
             <div
               onClick={() => router.push('/app/settings')}
-              className="flex items-center gap-2 pl-2 cursor-pointer group"
+              className="flex items-center gap-2 pl-1 cursor-pointer group"
             >
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-rose-600 via-amber-500 to-yellow-400 p-[1.5px] shadow-sm">
-                <div className="w-full h-full rounded-full bg-white dark:bg-[#0A0D16] flex items-center justify-center text-xs font-bold text-amber-700 dark:text-amber-300">
+              <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-rose-600 via-amber-500 to-yellow-400 p-[1.5px] shadow-sm">
+                <div className="w-full h-full rounded-full bg-white dark:bg-[#0A0D16] flex items-center justify-center text-[10px] font-bold text-amber-700 dark:text-amber-300">
                   KA
                 </div>
               </div>
@@ -200,7 +198,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         {/* Scrollable Page Body */}
         <main className="flex-1 overflow-y-auto relative z-10 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-800">
-          <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 pb-28 md:pb-12">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-8 py-3 sm:py-6 pb-24 md:pb-12 [.is-mobile-app-frame_&]:px-2.5 [.is-mobile-app-frame_&]:py-3 [.is-mobile-app-frame_&]:pb-20">
             {children}
           </div>
 
