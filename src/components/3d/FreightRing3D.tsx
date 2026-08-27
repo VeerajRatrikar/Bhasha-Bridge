@@ -64,11 +64,11 @@ export function FreightRing3D({ distance = 140, weight = 500 }: FreightRingProps
 
     // Animation Loop
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const time = clock.getElapsedTime();
+      const time = (performance.now() - startTime) * 0.001;
 
       group.rotation.y = time * 0.4;
       group.rotation.x = time * 0.2;

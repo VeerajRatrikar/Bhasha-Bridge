@@ -73,11 +73,11 @@ export function VoiceOrb3D({ isListening = true }: VoiceOrbProps) {
 
     // Animation Loop
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const time = clock.getElapsedTime();
+      const time = (performance.now() - startTime) * 0.001;
 
       // Pulse scaling when listening
       const pulseSpeed = isListening ? 4 : 1.5;

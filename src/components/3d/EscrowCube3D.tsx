@@ -71,11 +71,11 @@ export function EscrowCube3D() {
 
     // Animation Loop
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const time = clock.getElapsedTime();
+      const time = (performance.now() - startTime) * 0.001;
 
       escrowGroup.rotation.y = time * 0.5;
       escrowGroup.rotation.x = Math.sin(time * 0.3) * 0.2;
