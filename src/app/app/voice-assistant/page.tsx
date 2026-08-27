@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { IndicNluStudio } from '@/components/nlp/IndicNluStudio';
 
 export default function VoiceAssistantPage() {
   const router = useRouter();
@@ -469,6 +470,9 @@ export default function VoiceAssistantPage() {
           </div>
         </div>
       </div>
+
+      {/* ── Indic Natural Language Processing (NLP) Studio Sandbox ── */}
+      <IndicNluStudio />
     </motion.div>
   );
 }
