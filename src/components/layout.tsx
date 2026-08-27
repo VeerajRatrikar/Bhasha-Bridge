@@ -56,7 +56,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <MobileAppSimulatorWrapper>
       <div className="flex min-h-screen bg-slate-50 dark:bg-[#07090E] text-slate-900 dark:text-slate-100 font-sans selection:bg-amber-500/30 selection:text-amber-700 dark:selection:text-amber-200 transition-colors duration-300">
       {/* ── Left Sidebar: Ultra-Premium Responsive Glass ─────────────────────────── */}
-      <aside className="hidden md:flex flex-col w-64 shrink-0 border-r border-slate-200 dark:border-[#171E2E] bg-white/95 dark:bg-[#0A0D16]/95 backdrop-blur-2xl relative z-20 transition-colors duration-300">
+      <aside className="hidden [.is-mobile-app-frame_&]:hidden md:flex flex-col w-64 shrink-0 border-r border-slate-200 dark:border-[#171E2E] bg-white/95 dark:bg-[#0A0D16]/95 backdrop-blur-2xl relative z-20 transition-colors duration-300">
         {/* Ambient Top Glow in dark mode */}
         <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-amber-500/10 via-rose-500/5 to-transparent pointer-events-none opacity-0 dark:opacity-100 transition-opacity" />
 

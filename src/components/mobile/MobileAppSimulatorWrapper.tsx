@@ -159,7 +159,7 @@ export function MobileAppSimulatorWrapper({ children }: MobileAppSimulatorWrappe
               </div>
 
               {/* Scrollable Mobile App Body */}
-              <div className="flex-1 overflow-y-auto bg-[#07090E] relative scrollbar-none">
+              <div className="flex-1 overflow-y-auto bg-[#07090E] relative scrollbar-none is-mobile-app-frame">
                 {children}
               </div>
 
